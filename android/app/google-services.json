@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "741046411630",
+    "project_id": "testnotifi-b3bc6",
+    "storage_bucket": "testnotifi-b3bc6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:741046411630:android:29ce9b890f7e6fad8be17f",
+        "android_client_info": {
+          "package_name": "com.rncarddesign"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "741046411630-l2j6sodnk87tn43asmfrsm94qc45uk20.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-Hw-dCH39ps43UrhoIDkGaCv9BFrjc1o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "741046411630-l2j6sodnk87tn43asmfrsm94qc45uk20.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

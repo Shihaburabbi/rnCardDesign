@@ -1,72 +1,66 @@
-import React from 'react';
-import {
-  View,
-  Text,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Dimensions,
-} from 'react-native';
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import { fcmService } from './App/FCMNotification/FCMService';
+import { localNotificationService } from './App/FCMNotification/LocalNotificationService';
+import BackgroundTimer from './App/FCMNotification/BackgroundTimer';
+import PushNotification from 'react-native-push-notification';
+import messaging from '@react-native-firebase/messaging';
 
-const windowWidth = Dimensions.get('window').width;
-const windowHeight = Dimensions.get('window').height;
+export default class App extends Component {
 
-const App = () => {
-  const [cardText, setCardText] = React.useState([
-    'Card 1',
-    'Card 2',
-    'Card 3',
-    'Card 4',
-    'Card 5',
-    'Card 6',
-    'Card 7',
-    'Card 8',
-  ]);
+  async componentDidMount() {
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.text}>React Native Card Design</Text>
-      <ScrollView>
-        {cardText.map((item, index) => {
-          {
-            return (
-              <View key={index} style={styles.cardView}>
-                <Text style={styles.text}>{item}</Text>
-              </View>
-            );
-          }
-        })}
-      </ScrollView>
-    </SafeAreaView>
-  );
-};
+    fcmService.registerAppWithFCM()
+    fcmService.register(onRegister, onNotification, this.onOpenNotification)
+    localNotificationService.configure(this.onOpenNotification)
 
-export default App;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    backgroundColor: '#FFF',
-  },
-  text: {
-    fontSize: 20,
-    color: '#05375a',
-  },
-  cardView: {
-    height: 100,
-    width: windowWidth / 1.2,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#FFF',
-    elevation: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 1,
-    shadowRadius: 8,
-    borderRadius: 8,
-    paddingHorizontal: 16,
-    marginHorizontal: 16,
-    margin: 6,
-  },
-});
+    function onRegister(token) {
+      //console.log("[App] onRegister :", token)
+    }
+    function onNotification(notify, data) {
+
+
+
+      const options = {
+        soundName: "tone.mp3",
+        playSound: true,
+
+      }
+      localNotificationService.showNotification(
+        0,
+        notify.title,
+        notify.body,
+        notify,
+        options,
+
+      )
+    }
+
+    // PushNotification.cancelAllLocalNotifications()
+
+
+    // FCM Token Update Start
+    let fcmToken = await messaging().getToken()
+    // alert(fcmToken)
+    console.log('fcmToken=>>>>' + fcmToken)
+
+
+  }
+
+  componentWillUnmount() {
+
+    console.log("[App] unRegister ")
+    fcmService.unRegister()
+    localNotificationService.unregister()
+  }
+
+
+  render() {
+    return (
+      <View>
+        <Text> textInComponent </Text>
+      </View>
+    )
+  }
+}
