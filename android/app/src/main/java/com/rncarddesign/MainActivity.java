@@ -13,6 +13,7 @@ import android.os.Bundle;
 import com.facebook.react.bridge.ReactContext;
 import android.os.Handler;
 
+
 public class MainActivity extends ReactActivity {
 
 
@@ -26,6 +27,7 @@ public class MainActivity extends ReactActivity {
     return "RNCardDesign";
   }
 
+  
   public boolean isOnNewIntent = false;
 
   @Override
@@ -38,13 +40,17 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onStart() {
+//    Log.e("onStart", "onStart");
     super.onStart();
     if(isOnNewIntent == true){
+//      Log.e("onStart true", "onStart true");
     }else {
+      Log.e("onStart else true", "onStart else true");
       final Handler handler = new Handler();
       new Handler().postDelayed(new Runnable() {
         @Override
         public void run() {
+          Log.e("onStart run", "onStart run");
           FullScreenPropsEmitter(getIntent());  }
       }, 5000);
 
@@ -55,13 +61,13 @@ public class MainActivity extends ReactActivity {
 
   public void FullScreenPropsEmitter(Intent intent){
 
+//    Log.e("Shihab","Rabbi" );
 //    Model model = (Model) getIntent().getSerializableExtra("STRING_I_NEED")
-WritableMap map = Arguments.createMap();
+    WritableMap map = Arguments.createMap();
     String phoneNo = intent.getStringExtra("PHONE_NO");
       map.putString("phone_no",phoneNo);
-   
       try{
-
+        Log.e("Saad",phoneNo.toString());
         getReactInstanceManager().getCurrentReactContext()
         .getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter.class)
         .emit("notificationHandle",map);
